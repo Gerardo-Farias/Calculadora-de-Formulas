@@ -1,25 +1,19 @@
-﻿namespace Calculadora_de_Fórmulas
+﻿using System;
+using Microsoft.Maui.Controls;
+
+namespace Calculadora_de_Fórmulas
 {
     public partial class MainPage : ContentPage
     {
-        int count = 0;
-
         public MainPage()
         {
             InitializeComponent();
         }
 
-        private void OnCounterClicked(object sender, EventArgs e)
+        private async void OnLagrangeButtonClicked(object sender, EventArgs e)
         {
-            count++;
-
-            if (count == 1)
-                CounterBtn.Text = $"Clicked {count} time";
-            else
-                CounterBtn.Text = $"Clicked {count} times";
-
-            SemanticScreenReader.Announce(CounterBtn.Text);
+            // Navega a la página de interpolación de Lagrange
+            await Navigation.PushAsync(new LagrangeMain());
         }
     }
-
 }

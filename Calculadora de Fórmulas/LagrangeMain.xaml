@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Calculadora_de_Fórmulas.LagrangeMain"
+             BackgroundColor="Black">
+
+    <VerticalStackLayout Padding="20">
+
+        <Label Text="Interpolación de Lagrange"
+               FontSize="24"
+               HorizontalOptions="Center"
+               TextColor="White"/>
+
+        <Label Text="Ingrese los puntos (x, f(x)):"
+               FontSize="16"
+               TextColor="White"/>
+
+        <Grid x:Name="PointsGrid"
+              ColumnDefinitions="Auto, Auto"
+              RowDefinitions="Auto">
+
+            <Label Text="X" TextColor="White" FontSize="18" Grid.Row="0" Grid.Column="0"/>
+            <Label Text="f(X)" TextColor="White" FontSize="18" Grid.Row="0" Grid.Column="1"/>
+
+            <Entry x:Name="x0Entry" Placeholder="x0" BackgroundColor="White" Grid.Row="1" Grid.Column="0"/>
+            <Entry x:Name="fx0Entry" Placeholder="f(x0)" BackgroundColor="White" Grid.Row="1" Grid.Column="1"/>
+
+            <Entry x:Name="x1Entry" Placeholder="x1" BackgroundColor="White" Grid.Row="2" Grid.Column="0"/>
+            <Entry x:Name="fx1Entry" Placeholder="f(x1)" BackgroundColor="White" Grid.Row="2" Grid.Column="1"/>
+
+        </Grid>
+
+        <Button Text="Añadir Punto"
+                Clicked="OnAddPointClicked"
+                BackgroundColor="Gray"
+                TextColor="White"
+                Margin="5"/>
+
+        <Button Text="Calcular"
+                Clicked="OnCalculateClicked"
+                BackgroundColor="Blue"
+                TextColor="White"
+                Margin="5"/>
+
+        <Label x:Name="ResultLabel"
+               FontSize="18"
+               TextColor="White"
+               Text="Resultado:"
+               HorizontalOptions="Center"/>
+
+    </VerticalStackLayout>
+
+</ContentPage>

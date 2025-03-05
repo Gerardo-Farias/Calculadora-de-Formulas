@@ -11,28 +11,36 @@
                HorizontalOptions="Center"
                TextColor="White"/>
 
+        <Label Text="Ingrese el valor de X a interpolar:"
+               FontSize="16"
+               TextColor="White"/>
+        <Entry x:Name="XValueEntry" Placeholder="Ingrese X" BackgroundColor="White" WidthRequest="200"/>
+
         <Label Text="Ingrese los puntos (x, f(x)):"
                FontSize="16"
                TextColor="White"/>
 
+        <!-- Grid para los puntos -->
         <Grid x:Name="PointsGrid"
               ColumnDefinitions="Auto, Auto"
-              RowDefinitions="Auto">
+              RowDefinitions="Auto, Auto">
+            <!-- Asegúrate de que haya al menos dos filas definidas -->
 
             <Label Text="X" TextColor="White" FontSize="18" Grid.Row="0" Grid.Column="0"/>
             <Label Text="f(X)" TextColor="White" FontSize="18" Grid.Row="0" Grid.Column="1"/>
 
-            <Entry x:Name="x0Entry" Placeholder="x0" BackgroundColor="White" Grid.Row="1" Grid.Column="0"/>
-            <Entry x:Name="fx0Entry" Placeholder="f(x0)" BackgroundColor="White" Grid.Row="1" Grid.Column="1"/>
-
-            <Entry x:Name="x1Entry" Placeholder="x1" BackgroundColor="White" Grid.Row="2" Grid.Column="0"/>
-            <Entry x:Name="fx1Entry" Placeholder="f(x1)" BackgroundColor="White" Grid.Row="2" Grid.Column="1"/>
-
         </Grid>
 
+        <!-- Botones para añadir, eliminar y calcular -->
         <Button Text="Añadir Punto"
                 Clicked="OnAddPointClicked"
                 BackgroundColor="Gray"
+                TextColor="White"
+                Margin="5"/>
+
+        <Button Text="Eliminar Último Punto"
+                Clicked="OnRemovePointClicked"
+                BackgroundColor="Red"
                 TextColor="White"
                 Margin="5"/>
 

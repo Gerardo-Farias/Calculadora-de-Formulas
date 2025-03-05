@@ -20,4 +20,5 @@
                 TextColor="White"
                 Clicked="OnLagrangeButtonClicked"/>
     </VerticalStackLayout>
+
 </ContentPage>

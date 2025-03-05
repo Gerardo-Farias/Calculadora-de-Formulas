@@ -14,6 +14,9 @@ namespace Calculadora_de_Fórmulas
         {
             InitializeComponent();
 
+            // Configurar el color del texto del Entry para "Ingrese X"
+            XValueEntry.TextColor = Colors.Black; // Asegúrate de que el texto sea negro
+
             // Agregar los primeros puntos x0, f(x0) y x1, f(x1) en el Grid
             AddPointToGrid("x0", "f(x0)");
             AddPointToGrid("x1", "f(x1)");
@@ -22,8 +25,20 @@ namespace Calculadora_de_Fórmulas
         private void AddPointToGrid(string xPlaceholder, string fxPlaceholder)
         {
             // Crear las entradas
-            Entry xEntry = new Entry { Placeholder = xPlaceholder, BackgroundColor = Colors.White, WidthRequest = 100 };
-            Entry fxEntry = new Entry { Placeholder = fxPlaceholder, BackgroundColor = Colors.White, WidthRequest = 100 };
+            Entry xEntry = new Entry
+            {
+                Placeholder = xPlaceholder,
+                BackgroundColor = Colors.White,
+                TextColor = Colors.Black, // Texto negro
+                WidthRequest = 100
+            };
+            Entry fxEntry = new Entry
+            {
+                Placeholder = fxPlaceholder,
+                BackgroundColor = Colors.White,
+                TextColor = Colors.Black, // Texto negro
+                WidthRequest = 100
+            };
 
             // Añadir una nueva fila al Grid
             PointsGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });

@@ -32,7 +32,7 @@ namespace Calculadora_de_Fórmulas
             RealValueEntry.TextChanged += OnEntryTextChanged;
         }
 
-        private void OnEntryTextChanged(object sender, TextChangedEventArgs e)
+        private void OnEntryTextChanged(object? sender, TextChangedEventArgs e)
         {
             if (sender is Entry entry)
             {

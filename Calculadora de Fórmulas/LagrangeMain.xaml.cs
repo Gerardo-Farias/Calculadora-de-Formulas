@@ -36,23 +36,18 @@ namespace Calculadora_de_Fórmulas
         {
             if (sender is Entry entry)
             {
-                // Si el campo está vacío, no restauramos el valor anterior
-                if (string.IsNullOrEmpty(entry.Text))
+                // Solo permitir números y un punto decimal
+                string newText = entry.Text;
+
+                // Verifica si el nuevo texto tiene solo dígitos y/o un punto decimal
+                if (string.IsNullOrEmpty(newText) || newText.All(c => char.IsDigit(c) || c == '.'))
                 {
-                    lastValidValues[entry] = "";
+                    // Si es válido, no hacemos nada
                     return;
                 }
 
-                // Si el valor ingresado es un número válido, guardamos ese valor
-                if (double.TryParse(entry.Text, out _))
-                {
-                    lastValidValues[entry] = entry.Text; // Guardar el último valor válido
-                }
-                else
-                {
-                    // Si no es válido, restauramos el valor anterior
-                    entry.Text = lastValidValues[entry];
-                }
+                // Si el texto es inválido (contiene letras u otros caracteres), lo restauramos al valor anterior
+                entry.Text = e.OldTextValue;
             }
         }
 

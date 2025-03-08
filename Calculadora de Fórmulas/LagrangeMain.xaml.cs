@@ -9,41 +9,94 @@ namespace Calculadora_de_Fórmulas
         private List<Entry> xEntries = new List<Entry>();
         private List<Entry> fxEntries = new List<Entry>();
         private int currentRow = 1; // Comenzamos desde la fila 1 (después de las etiquetas)
+        private Dictionary<Entry, string> lastValidValues = new Dictionary<Entry, string>();
 
         public LagrangeMain()
         {
             InitializeComponent();
+            InitializeGrid();
+            BindTextChangedEvents();
+        }
 
-            // Configurar el color del texto del Entry para "Ingrese X"
-            XValueEntry.TextColor = Colors.Black; // Asegúrate de que el texto sea negro
-
+        private void InitializeGrid()
+        {
             // Agregar los primeros puntos x0, f(x0) y x1, f(x1) en el Grid
             AddPointToGrid("x0", "f(x0)");
             AddPointToGrid("x1", "f(x1)");
         }
 
+        private void BindTextChangedEvents()
+        {
+            // Vincular eventos de validación a las entradas
+            XValueEntry.TextChanged += OnEntryTextChanged;
+            RealValueEntry.TextChanged += OnEntryTextChanged;
+        }
+
+        private void OnEntryTextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (sender is Entry entry)
+            {
+                // Si el campo está vacío, no restauramos el valor anterior
+                if (string.IsNullOrEmpty(entry.Text))
+                {
+                    lastValidValues[entry] = "";
+                    return;
+                }
+
+                // Si el valor ingresado es un número válido, guardamos ese valor
+                if (double.TryParse(entry.Text, out _))
+                {
+                    lastValidValues[entry] = entry.Text; // Guardar el último valor válido
+                }
+                else
+                {
+                    // Si no es válido, restauramos el valor anterior
+                    entry.Text = lastValidValues[entry];
+                }
+            }
+        }
+
         private void AddPointToGrid(string xPlaceholder, string fxPlaceholder)
         {
-            // Crear las entradas
-            Entry xEntry = new Entry
-            {
-                Placeholder = xPlaceholder,
-                BackgroundColor = Colors.White,
-                TextColor = Colors.Black, // Texto negro
-                WidthRequest = 100
-            };
-            Entry fxEntry = new Entry
-            {
-                Placeholder = fxPlaceholder,
-                BackgroundColor = Colors.White,
-                TextColor = Colors.Black, // Texto negro
-                WidthRequest = 100
-            };
+            // Crear las entradas para x y f(x)
+            var xEntry = CreateEntry(xPlaceholder);
+            var fxEntry = CreateEntry(fxPlaceholder);
 
-            // Añadir una nueva fila al Grid
+            // Asociar eventos de cambio de texto
+            xEntry.TextChanged += OnEntryTextChanged;
+            fxEntry.TextChanged += OnEntryTextChanged;
+
+            // Añadir los controles al Grid
+            AddControlsToGrid(xEntry, fxEntry);
+
+            // Guardar las referencias de las entradas
+            xEntries.Add(xEntry);
+            fxEntries.Add(fxEntry);
+
+            // Inicializar los valores válidos
+            lastValidValues[xEntry] = "";
+            lastValidValues[fxEntry] = "";
+
+            currentRow++;
+        }
+
+        private Entry CreateEntry(string placeholder)
+        {
+            return new Entry
+            {
+                Placeholder = placeholder,
+                BackgroundColor = Colors.White,
+                TextColor = Colors.Black,
+                WidthRequest = 100,
+                HorizontalOptions = LayoutOptions.Center
+            };
+        }
+
+        private void AddControlsToGrid(Entry xEntry, Entry fxEntry)
+        {
             PointsGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
 
-            // Añadir las entradas al Grid en la fila correspondiente
+            // Añadir las entradas al Grid
             PointsGrid.Children.Add(xEntry);
             Grid.SetRow(xEntry, currentRow);
             Grid.SetColumn(xEntry, 0);
@@ -51,46 +104,43 @@ namespace Calculadora_de_Fórmulas
             PointsGrid.Children.Add(fxEntry);
             Grid.SetRow(fxEntry, currentRow);
             Grid.SetColumn(fxEntry, 1);
-
-            // Guardar las entradas en las listas para accederlas más tarde
-            xEntries.Add(xEntry);
-            fxEntries.Add(fxEntry);
-
-            // Incrementar la fila para el siguiente punto
-            currentRow++;
         }
 
         private void OnAddPointClicked(object sender, EventArgs e)
         {
-            // Asegurarse de que hay al menos dos puntos antes de agregar más
             if (xEntries.Count >= 2)
             {
-                // Usar el tamaño de la lista para determinar el nuevo índice
-                int newIndex = xEntries.Count; // Esto comenzará en 2 para x2, f(x2)
-                string xPlaceholder = $"x{newIndex}";
-                string fxPlaceholder = $"f(x{newIndex})";
-                AddPointToGrid(xPlaceholder, fxPlaceholder);
+                // Agregar un nuevo punto x, f(x)
+                int newIndex = xEntries.Count;
+                AddPointToGrid($"x{newIndex}", $"f(x{newIndex})");
             }
         }
 
         private void OnRemovePointClicked(object sender, EventArgs e)
         {
-            if (xEntries.Count > 2) // Asegurarse de que siempre haya al menos dos puntos
+            if (xEntries.Count > 2)
             {
-                int lastRow = xEntries.Count - 1;
-
-                // Eliminar las últimas entradas del Grid
-                PointsGrid.Children.Remove(xEntries[lastRow]);
-                PointsGrid.Children.Remove(fxEntries[lastRow]);
-                xEntries.RemoveAt(lastRow);
-                fxEntries.RemoveAt(lastRow);
-
-                // Eliminar la última fila del Grid
-                PointsGrid.RowDefinitions.RemoveAt(lastRow + 1); // +1 porque la fila se cuenta desde 0
-
-                // Decrementar la fila actual
-                currentRow--;
+                // Eliminar el último punto x, f(x)
+                RemoveLastPointFromGrid();
             }
+        }
+
+        private void RemoveLastPointFromGrid()
+        {
+            int lastRow = xEntries.Count - 1;
+
+            // Eliminar las entradas del Grid
+            PointsGrid.Children.Remove(xEntries[lastRow]);
+            PointsGrid.Children.Remove(fxEntries[lastRow]);
+
+            // Eliminar las referencias de las listas
+            xEntries.RemoveAt(lastRow);
+            fxEntries.RemoveAt(lastRow);
+
+            // Eliminar la definición de la fila
+            PointsGrid.RowDefinitions.RemoveAt(lastRow + 1);
+
+            currentRow--;
         }
 
         private void OnCalculateClicked(object sender, EventArgs e)
@@ -100,37 +150,58 @@ namespace Calculadora_de_Fórmulas
                 List<double> xValues = new List<double>();
                 List<double> fxValues = new List<double>();
 
-                // Leer los datos de los Entrys
-                for (int i = 0; i < xEntries.Count; i++)
-                {
-                    if (double.TryParse(xEntries[i].Text, out double xVal) && double.TryParse(fxEntries[i].Text, out double fxVal))
-                    {
-                        xValues.Add(xVal);
-                        fxValues.Add(fxVal);
-                    }
-                    else
-                    {
-                        ResultLabel.Text = "Por favor ingrese valores numéricos válidos.";
-                        return;
-                    }
-                }
+                // Validar los valores de X y f(X)
+                if (!ValidateEntries(xValues, fxValues))
+                    return;
 
-                double x = 0;
-                if (!double.TryParse(XValueEntry.Text, out x))
+                // Validar el valor de X para la interpolación
+                if (!double.TryParse(XValueEntry.Text, out double x))
                 {
                     ResultLabel.Text = "Valor de X no válido.";
                     return;
                 }
 
-                // Realizamos la interpolación de Lagrange
+                // Realizar la interpolación de Lagrange
                 double result = LagrangeInterpolation(xValues, fxValues, x);
+                string resultText = FormatResult(result);
 
-                ResultLabel.Text = $"Resultado: {result:F4}";
+                // Si se proporcionó un valor real, calcular el error porcentual
+                if (double.TryParse(RealValueEntry.Text, out double realValue))
+                {
+                    double errorPercentage = Math.Abs((realValue - result) / realValue) * 100;
+                    resultText += $", Error porcentual: {errorPercentage:F10}%";
+                }
+
+                ResultLabel.Text = resultText;
             }
-            catch (Exception ex)
+            catch
             {
                 ResultLabel.Text = "Error en los datos.";
             }
+        }
+
+        private bool ValidateEntries(List<double> xValues, List<double> fxValues)
+        {
+            for (int i = 0; i < xEntries.Count; i++)
+            {
+                if (double.TryParse(xEntries[i].Text, out double xVal) && double.TryParse(fxEntries[i].Text, out double fxVal))
+                {
+                    xValues.Add(xVal);
+                    fxValues.Add(fxVal);
+                }
+                else
+                {
+                    ResultLabel.Text = "Por favor ingrese valores numéricos válidos.";
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        private string FormatResult(double result)
+        {
+            string polynomialDegree = $"P{Math.Max(1, xEntries.Count - 1)}";
+            return $"{polynomialDegree} es: {result:F10}";
         }
 
         private double LagrangeInterpolation(List<double> x, List<double> fx, double X)

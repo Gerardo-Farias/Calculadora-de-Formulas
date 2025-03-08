@@ -2,59 +2,72 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Calculadora_de_Fórmulas.LagrangeMain"
-             BackgroundColor="Black">
+             BackgroundColor="{AppThemeBinding Light=White, Dark=Black}">
 
     <VerticalStackLayout Padding="20">
 
+        <!-- Título -->
         <Label Text="Interpolación de Lagrange"
                FontSize="24"
                HorizontalOptions="Center"
-               TextColor="White"/>
+               TextColor="{AppThemeBinding Light=Black, Dark=White}" />
 
+        <!-- Campo para ingresar el valor de X -->
         <Label Text="Ingrese el valor de X a interpolar:"
                FontSize="16"
-               TextColor="White"/>
-        <Entry x:Name="XValueEntry" Placeholder="Ingrese X" BackgroundColor="White" WidthRequest="200"/>
+               TextColor="{AppThemeBinding Light=Black, Dark=White}" />
+        <Entry x:Name="XValueEntry" 
+               Placeholder="Ingrese X" 
+               BackgroundColor="White" 
+               TextColor="Black"
+               PlaceholderColor="Gray"
+               WidthRequest="200"
+               TextChanged="OnEntryTextChanged" />
 
+        <!-- Campo para ingresar el valor real opcional -->
+        <Label Text="Ingrese valor real (opcional):"
+               FontSize="16"
+               TextColor="{AppThemeBinding Light=Black, Dark=White}" />
+        <Entry x:Name="RealValueEntry" 
+               Placeholder="Valor real" 
+               BackgroundColor="White" 
+               TextColor="Black"
+               PlaceholderColor="Gray"
+               WidthRequest="200"
+               TextChanged="OnEntryTextChanged" />
+
+        <!-- Puntos de la interpolación -->
         <Label Text="Ingrese los puntos (x, f(x)):"
                FontSize="16"
-               TextColor="White"/>
+               TextColor="{AppThemeBinding Light=Black, Dark=White}" />
 
-        <!-- Grid para los puntos -->
-        <Grid x:Name="PointsGrid"
-              ColumnDefinitions="Auto, Auto"
-              RowDefinitions="Auto, Auto">
-            <!-- Asegúrate de que haya al menos dos filas definidas -->
-
-            <Label Text="X" TextColor="White" FontSize="18" Grid.Row="0" Grid.Column="0"/>
-            <Label Text="f(X)" TextColor="White" FontSize="18" Grid.Row="0" Grid.Column="1"/>
-
+        <Grid x:Name="PointsGrid" ColumnDefinitions="Auto, Auto" RowDefinitions="Auto, Auto">
+            <Label Text="X" TextColor="{AppThemeBinding Light=Black, Dark=White}" FontSize="18" Grid.Row="0" Grid.Column="0"/>
+            <Label Text="f(X)" TextColor="{AppThemeBinding Light=Black, Dark=White}" FontSize="18" Grid.Row="0" Grid.Column="1"/>
         </Grid>
 
-        <!-- Botones para añadir, eliminar y calcular -->
-        <Button Text="Añadir Punto"
-                Clicked="OnAddPointClicked"
-                BackgroundColor="Gray"
-                TextColor="White"
-                Margin="5"/>
+        <!-- Botones -->
+        <StackLayout Spacing="10" Orientation="Vertical">
+            <Button Text="Añadir polinomio Lagrangeano"
+                    Clicked="OnAddPointClicked"
+                    BackgroundColor="Gray"
+                    TextColor="White" />
+            <Button Text="Eliminar último polinomio"
+                    Clicked="OnRemovePointClicked"
+                    BackgroundColor="Gray"
+                    TextColor="White" />
+            <Button Text="Calcular"
+                    Clicked="OnCalculateClicked"
+                    BackgroundColor="Gray"
+                    TextColor="White" />
+        </StackLayout>
 
-        <Button Text="Eliminar Último Punto"
-                Clicked="OnRemovePointClicked"
-                BackgroundColor="Red"
-                TextColor="White"
-                Margin="5"/>
-
-        <Button Text="Calcular"
-                Clicked="OnCalculateClicked"
-                BackgroundColor="Blue"
-                TextColor="White"
-                Margin="5"/>
-
+        <!-- Etiqueta de Resultado -->
         <Label x:Name="ResultLabel"
                FontSize="18"
-               TextColor="White"
+               TextColor="{AppThemeBinding Light=Black, Dark=White}"
                Text="Resultado:"
-               HorizontalOptions="Center"/>
+               HorizontalOptions="Center" />
 
     </VerticalStackLayout>
 

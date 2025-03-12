@@ -164,7 +164,7 @@ namespace Calculadora_de_Fórmulas
                 if (double.TryParse(RealValueEntry.Text, out double realValue))
                 {
                     double errorPercentage = Math.Abs((realValue - result) / realValue) * 100;
-                    resultText += $", Error porcentual: {errorPercentage:F10}%";
+                    resultText += $", Error porcentual = {errorPercentage:F10}%";
                 }
 
                 ResultLabel.Text = resultText;
@@ -186,7 +186,7 @@ namespace Calculadora_de_Fórmulas
                 }
                 else
                 {
-                    ResultLabel.Text = "Por favor ingrese valores numéricos válidos.";
+                    ResultLabel.Text = "Por favor, ingrese valores numéricos válidos.";
                     return false;
                 }
             }
@@ -196,7 +196,7 @@ namespace Calculadora_de_Fórmulas
         private string FormatResult(double result)
         {
             string polynomialDegree = $"P{Math.Max(1, xEntries.Count - 1)}";
-            return $"{polynomialDegree} es: {result:F10}";
+            return $"{polynomialDegree} = {result:F10}";
         }
 
         private double LagrangeInterpolation(List<double> x, List<double> fx, double X)

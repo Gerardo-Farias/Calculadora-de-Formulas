@@ -6,17 +6,20 @@
 
     <!-- Agregamos un ScrollView para permitir el desplazamiento -->
     <ScrollView>
-        <VerticalStackLayout Padding="20">
+        <VerticalStackLayout Padding="30">
 
             <!-- Título -->
             <Label Text="Interpolación de Lagrange"
                    FontSize="24"
                    HorizontalOptions="Center"
+                   Margin="0, 0, 0, 30"
                    TextColor="{AppThemeBinding Light=Black, Dark=White}" />
 
             <!-- Campo para ingresar el valor de X -->
-            <Label Text="Ingrese el valor de X a interpolar:"
-                   FontSize="16"
+            <Label Text="Ingresar valor de X:"
+                   FontSize="20"
+                   HorizontalOptions="Center"
+                   Margin="0, 0, 0, 5"
                    TextColor="{AppThemeBinding Light=Black, Dark=White}" />
             <Entry x:Name="XValueEntry" 
                    Placeholder="Ingrese X" 
@@ -24,11 +27,14 @@
                    TextColor="Black"
                    PlaceholderColor="Gray"
                    WidthRequest="200"
+                   Margin="0, 0, 0, 20"
                    TextChanged="OnEntryTextChanged" />
 
             <!-- Campo para ingresar el valor real opcional -->
-            <Label Text="Ingrese valor real (opcional):"
-                   FontSize="16"
+            <Label Text="(Opcional) Ingresar valor real:"
+                   FontSize="20"
+                   HorizontalOptions="Center"
+                   Margin="0, 0, 0, 5"
                    TextColor="{AppThemeBinding Light=Black, Dark=White}" />
             <Entry x:Name="RealValueEntry" 
                    Placeholder="Valor real" 
@@ -36,11 +42,12 @@
                    TextColor="Black"
                    PlaceholderColor="Gray"
                    WidthRequest="200"
+                   Margin="0, 0, 0, 20"
                    TextChanged="OnEntryTextChanged" />
 
             <!-- Puntos de la interpolación -->
             <Label Text="Ingrese los puntos (x, f(x)):"
-                   FontSize="16"
+                   FontSize="20"
                    TextColor="{AppThemeBinding Light=Black, Dark=White}" />
 
             <Grid x:Name="PointsGrid" ColumnDefinitions="Auto, Auto" RowDefinitions="Auto, Auto">

@@ -4,71 +4,73 @@
              x:Class="Calculadora_de_Fórmulas.LagrangeMain"
              BackgroundColor="{AppThemeBinding Light=White, Dark=Black}">
 
-    <VerticalStackLayout Padding="20">
+    <!-- Agregamos un ScrollView para permitir el desplazamiento -->
+    <ScrollView>
+        <VerticalStackLayout Padding="20">
 
-        <!-- Título -->
-        <Label Text="Interpolación de Lagrange"
-               FontSize="24"
-               HorizontalOptions="Center"
-               TextColor="{AppThemeBinding Light=Black, Dark=White}" />
+            <!-- Título -->
+            <Label Text="Interpolación de Lagrange"
+                   FontSize="24"
+                   HorizontalOptions="Center"
+                   TextColor="{AppThemeBinding Light=Black, Dark=White}" />
 
-        <!-- Campo para ingresar el valor de X -->
-        <Label Text="Ingrese el valor de X a interpolar:"
-               FontSize="16"
-               TextColor="{AppThemeBinding Light=Black, Dark=White}" />
-        <Entry x:Name="XValueEntry" 
-               Placeholder="Ingrese X" 
-               BackgroundColor="White" 
-               TextColor="Black"
-               PlaceholderColor="Gray"
-               WidthRequest="200"
-               TextChanged="OnEntryTextChanged" />
+            <!-- Campo para ingresar el valor de X -->
+            <Label Text="Ingrese el valor de X a interpolar:"
+                   FontSize="16"
+                   TextColor="{AppThemeBinding Light=Black, Dark=White}" />
+            <Entry x:Name="XValueEntry" 
+                   Placeholder="Ingrese X" 
+                   BackgroundColor="White" 
+                   TextColor="Black"
+                   PlaceholderColor="Gray"
+                   WidthRequest="200"
+                   TextChanged="OnEntryTextChanged" />
 
-        <!-- Campo para ingresar el valor real opcional -->
-        <Label Text="Ingrese valor real (opcional):"
-               FontSize="16"
-               TextColor="{AppThemeBinding Light=Black, Dark=White}" />
-        <Entry x:Name="RealValueEntry" 
-               Placeholder="Valor real" 
-               BackgroundColor="White" 
-               TextColor="Black"
-               PlaceholderColor="Gray"
-               WidthRequest="200"
-               TextChanged="OnEntryTextChanged" />
+            <!-- Campo para ingresar el valor real opcional -->
+            <Label Text="Ingrese valor real (opcional):"
+                   FontSize="16"
+                   TextColor="{AppThemeBinding Light=Black, Dark=White}" />
+            <Entry x:Name="RealValueEntry" 
+                   Placeholder="Valor real" 
+                   BackgroundColor="White" 
+                   TextColor="Black"
+                   PlaceholderColor="Gray"
+                   WidthRequest="200"
+                   TextChanged="OnEntryTextChanged" />
 
-        <!-- Puntos de la interpolación -->
-        <Label Text="Ingrese los puntos (x, f(x)):"
-               FontSize="16"
-               TextColor="{AppThemeBinding Light=Black, Dark=White}" />
+            <!-- Puntos de la interpolación -->
+            <Label Text="Ingrese los puntos (x, f(x)):"
+                   FontSize="16"
+                   TextColor="{AppThemeBinding Light=Black, Dark=White}" />
 
-        <Grid x:Name="PointsGrid" ColumnDefinitions="Auto, Auto" RowDefinitions="Auto, Auto">
-            <Label Text="X" TextColor="{AppThemeBinding Light=Black, Dark=White}" FontSize="18" Grid.Row="0" Grid.Column="0"/>
-            <Label Text="f(X)" TextColor="{AppThemeBinding Light=Black, Dark=White}" FontSize="18" Grid.Row="0" Grid.Column="1"/>
-        </Grid>
+            <Grid x:Name="PointsGrid" ColumnDefinitions="Auto, Auto" RowDefinitions="Auto, Auto">
+                <Label Text="X" TextColor="{AppThemeBinding Light=Black, Dark=White}" FontSize="18" Grid.Row="0" Grid.Column="0"/>
+                <Label Text="f(X)" TextColor="{AppThemeBinding Light=Black, Dark=White}" FontSize="18" Grid.Row="0" Grid.Column="1"/>
+            </Grid>
 
-        <!-- Botones -->
-        <StackLayout Spacing="10" Orientation="Vertical">
-            <Button Text="Añadir polinomio Lagrangeano"
-                    Clicked="OnAddPointClicked"
-                    BackgroundColor="Gray"
-                    TextColor="White" />
-            <Button Text="Eliminar último polinomio"
-                    Clicked="OnRemovePointClicked"
-                    BackgroundColor="Gray"
-                    TextColor="White" />
-            <Button Text="Calcular"
-                    Clicked="OnCalculateClicked"
-                    BackgroundColor="Gray"
-                    TextColor="White" />
-        </StackLayout>
+            <!-- Botones -->
+            <StackLayout Spacing="10" Orientation="Vertical">
+                <Button Text="Añadir polinomio Lagrangeano"
+                        Clicked="OnAddPointClicked"
+                        BackgroundColor="Gray"
+                        TextColor="White" />
+                <Button Text="Eliminar último polinomio"
+                        Clicked="OnRemovePointClicked"
+                        BackgroundColor="Gray"
+                        TextColor="White" />
+                <Button Text="Calcular"
+                        Clicked="OnCalculateClicked"
+                        BackgroundColor="Gray"
+                        TextColor="White" />
+            </StackLayout>
 
-        <!-- Etiqueta de Resultado -->
-        <Label x:Name="ResultLabel"
-               FontSize="18"
-               TextColor="{AppThemeBinding Light=Black, Dark=White}"
-               Text="Resultado:"
-               HorizontalOptions="Center" />
+            <!-- Etiqueta de Resultado -->
+            <Label x:Name="ResultLabel"
+                   FontSize="18"
+                   TextColor="{AppThemeBinding Light=Black, Dark=White}"
+                   Text="Resultado:"
+                   HorizontalOptions="Center" />
 
-    </VerticalStackLayout>
-
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

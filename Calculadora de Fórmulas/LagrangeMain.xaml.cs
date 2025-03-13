@@ -163,7 +163,8 @@ namespace Calculadora_de_Fórmulas
                 // Si se proporcionó un valor real, calcular el error porcentual
                 if (double.TryParse(RealValueEntry.Text, out double realValue))
                 {
-                    double errorPercentage = Math.Abs((realValue - result) / realValue) * 100;
+                    // Corregido: ahora preservamos el signo del error porcentual
+                    double errorPercentage = ((realValue - result) / realValue) * 100;
                     resultText += $", Error porcentual = {errorPercentage:F10}%";
                 }
 
@@ -204,6 +205,7 @@ namespace Calculadora_de_Fórmulas
             double result = 0;
             int n = x.Count;
 
+            // Calcular la interpolación de Lagrange
             for (int i = 0; i < n; i++)
             {
                 double term = fx[i];
@@ -215,7 +217,11 @@ namespace Calculadora_de_Fórmulas
                     }
                 }
                 result += term;
+
+                // Depuración: Verificar el valor de cada término
+                Console.WriteLine($"Term {i}: {term}");
             }
+
             return result;
         }
     }

@@ -15,5 +15,10 @@ namespace Calculadora_de_Fórmulas
             // Navega a la página de interpolación de Lagrange
             await Navigation.PushAsync(new LagrangeMain());
         }
+        private async void OnNewtonButtonClicked(object sender, EventArgs e)
+        {
+            // Navega a la página de interpolación de Newton
+            await Navigation.PushAsync(new NewtonMain());
+        }
     }
 }

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Calculadora_de_Fórmulas.NewtonMain"
+             BackgroundColor="{AppThemeBinding Light=White, Dark=Black}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="30">
+
+            <Label Text="Interpolación de Newton"
+                   FontSize="24"
+                   HorizontalOptions="Center"
+                   Margin="0, 0, 0, 30"
+                   TextColor="{AppThemeBinding Light=Black, Dark=White}" />
+
+            <Label Text="Ingresar valor de X:"
+                   FontSize="20"
+                   HorizontalOptions="Center"
+                   Margin="0, 0, 0, 5"
+                   TextColor="{AppThemeBinding Light=Black, Dark=White}" />
+            <Entry x:Name="XValueEntry" 
+                   Placeholder="Ingrese X" 
+                   BackgroundColor="White" 
+                   TextColor="Black"
+                   PlaceholderColor="Gray"
+                   WidthRequest="200"
+                   Margin="0, 0, 0, 20"
+                   TextChanged="OnEntryTextChanged" />
+
+            <Label Text="(Opcional) Ingresar valor real:"
+                   FontSize="20"
+                   HorizontalOptions="Center"
+                   Margin="0, 0, 0, 5"
+                   TextColor="{AppThemeBinding Light=Black, Dark=White}" />
+            <Entry x:Name="RealValueEntry" 
+                   Placeholder="Valor real" 
+                   BackgroundColor="White" 
+                   TextColor="Black"
+                   PlaceholderColor="Gray"
+                   WidthRequest="200"
+                   Margin="0, 0, 0, 20"
+                   TextChanged="OnEntryTextChanged" />
+
+            <Label Text="Ingrese los puntos (x, f(x)):"
+                   FontSize="20"
+                   TextColor="{AppThemeBinding Light=Black, Dark=White}" />
+
+            <Grid x:Name="PointsGrid" ColumnDefinitions="Auto, Auto" RowDefinitions="Auto, Auto">
+                <Label Text="X" TextColor="{AppThemeBinding Light=Black, Dark=White}" FontSize="18" Grid.Row="0" Grid.Column="0"/>
+                <Label Text="f(X)" TextColor="{AppThemeBinding Light=Black, Dark=White}" FontSize="18" Grid.Row="0" Grid.Column="1"/>
+            </Grid>
+
+            <StackLayout Spacing="10" Orientation="Vertical">
+                <Button Text="Añadir polinomio de Newton"
+                        Clicked="OnAddPointClicked"
+                        BackgroundColor="Gray"
+                        TextColor="White" />
+                <Button Text="Eliminar último polinomio"
+                        Clicked="OnRemovePointClicked"
+                        BackgroundColor="Gray"
+                        TextColor="White" />
+                <Button Text="Calcular"
+                        Clicked="OnCalculateClicked"
+                        BackgroundColor="Gray"
+                        TextColor="White" />
+            </StackLayout>
+
+            <Label x:Name="ResultLabel"
+                   FontSize="18"
+                   TextColor="{AppThemeBinding Light=Black, Dark=White}"
+                   Text="Resultado:"
+                   HorizontalOptions="Center" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

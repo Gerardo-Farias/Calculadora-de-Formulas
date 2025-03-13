@@ -19,6 +19,12 @@
                 BackgroundColor="MediumPurple"
                 TextColor="White"
                 Clicked="OnLagrangeButtonClicked"/>
+
+        <Button Text="Interpolación de Newton"
+                FontSize="16"
+                BackgroundColor="MediumPurple"
+                TextColor="White"
+                Clicked="OnNewtonButtonClicked"/>
     </VerticalStackLayout>
 
 </ContentPage>
